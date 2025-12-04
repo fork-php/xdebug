@@ -142,7 +142,7 @@ static void xdebug_build_fname_from_oparray(xdebug_func *tmp, zend_op_array *opa
 			tmp->function = zend_string_copy(opa->function_name);
 		}
 	} else {
-		tmp->function = ZSTR_INIT_LITERAL("{main}", false);
+		tmp->function = zend_string_init("{main}", strlen("{main}"), false);
 		tmp->type = XFUNC_MAIN;
 	}
 

@@ -220,7 +220,7 @@ void xdebug_build_fname(xdebug_func *tmp, zend_execute_data *edata)
 
 	if (edata && edata->func && edata->func == (zend_function*) &zend_pass_function) {
 		tmp->type     = XFUNC_ZEND_PASS;
-		tmp->function = ZSTR_INIT_LITERAL("{zend_pass}", false);
+		tmp->function = zend_string_init("{zend_pass}", strlen("{zend_pass}"), false);
 	} else if (edata && edata->func) {
 		tmp->type = XFUNC_NORMAL;
 		if ((Z_TYPE(edata->This)) == IS_OBJECT) {
@@ -296,7 +296,7 @@ normal_after_all:
 			)
 		) {
 			tmp->type = XFUNC_NORMAL;
-			tmp->function = ZSTR_INIT_LITERAL("{internal eval}", false);
+			tmp->function = zend_string_init("{internal eval}", strlen("{internal eval}"), false);
 		} else if (
 			edata &&
 			edata->prev_execute_data &&
@@ -674,7 +674,7 @@ function_stack_entry *xdebug_add_stack_frame(zend_execute_data *zdata, zend_op_a
 
 	xdebug_build_fname(&(tmp->function), zdata);
 	if (!tmp->function.type) {
-		tmp->function.function     = ZSTR_INIT_LITERAL("{main}", false);
+		tmp->function.function     = zend_string_init("{main}", strlen("{main}"), false);
 		tmp->function.object_class = NULL;
 		tmp->function.scope_class  = NULL;
 		tmp->function.type         = XFUNC_MAIN;

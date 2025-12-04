@@ -555,9 +555,9 @@ static int ide_key_is_cloud_id()
 
 static bool is_opcache_enabled()
 {
-	zend_string *opcache_enable = ZSTR_INIT_LITERAL("opcache.enable", 0);
-	zend_string *opcache_enable_cli = ZSTR_INIT_LITERAL("opcache.enable_cli", 0);
-	zend_string *opcache_optimization_level = ZSTR_INIT_LITERAL("opcache.optimization_level", 0);
+	zend_string *opcache_enable = zend_string_init("opcache.enable", strlen("opcache.enable"), 0);
+	zend_string *opcache_enable_cli = zend_string_init("opcache.enable_cli", strlen("opcache.enable_cli"), 0);
+	zend_string *opcache_optimization_level = zend_string_init("opcache.optimization_level", strlen("opcache.optimization_level"), 0);
 
 	zend_string *opcache_enable_v = zend_ini_get_value(opcache_enable);
 	zend_string *opcache_enable_cli_v = zend_ini_get_value(opcache_enable_cli);
