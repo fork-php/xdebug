@@ -759,7 +759,11 @@ void xdebug_append_printable_stack(xdebug_str *str, int html)
 				xdebug_str_add_literal(str, "...");
 			}
 
+#if PHP_VERSION_ID >= 80600
+			if (fse->user_defined == XDEBUG_BUILT_IN && fse->op_array->arg_info[j].name) {
+#else
 			if (fse->user_defined == XDEBUG_BUILT_IN && (fse->op_array->fn_flags & ZEND_ACC_USER_ARG_INFO) && fse->op_array->arg_info[j].name) {
+#endif
 				xdebug_str_add_const(str, html ? "<span>$" : "$");
 				xdebug_str_add_zstr(str, fse->op_array->arg_info[j].name);
 				xdebug_str_add_const(str, html ? " = </span>" : " = ");
