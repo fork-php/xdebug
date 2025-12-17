@@ -397,11 +397,15 @@ static void collect_params_internal(function_stack_entry *fse, zend_execute_data
 	/* Collect Names */
 	for (i = 0; i < names_expected; i++) {
 		if (op_array->arg_info[i].name) {
+#if PHP_VERSION_ID >= 80600
+			fse->var[i].name = zend_string_copy(op_array->arg_info[i].name);
+#else
 			fse->var[i].name = zend_string_init(
 				zdata->func->internal_function.arg_info[i].name,
 				strlen(zdata->func->internal_function.arg_info[i].name),
 				0
 			);
+#endif
 
 			/* If an argument is a variadic, then we mark that on this 'name',
 			 * and also remember which position the variadic started */
